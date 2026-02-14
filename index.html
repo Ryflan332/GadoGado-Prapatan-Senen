@@ -1,653 +1,917 @@
 <!doctype html>
 <html lang="id">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Maafin Leenka yaaa 🥺💚</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Valentine Pinky Love 💖</title>
+
+  <!-- Cute font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { cute: ["Fredoka", "ui-rounded", "system-ui"] },
+          keyframes: {
+            floaty: {
+              "0%,100%": { transform: "translateY(0)" },
+              "50%": { transform: "translateY(-10px)" },
+            },
+            pop: {
+              "0%": { transform: "scale(0.92)", opacity: "0" },
+              "100%": { transform: "scale(1)", opacity: "1" },
+            },
+            shimmer: {
+              "0%": { transform: "translateX(-120%)" },
+              "100%": { transform: "translateX(120%)" },
+            },
+            wiggle: {
+              "0%,100%": { transform: "rotate(-2deg)" },
+              "50%": { transform: "rotate(2deg)" },
+            },
+            fadeUp: {
+              "0%": { opacity: "0", transform: "translateY(10px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" },
+            },
+          },
+          animation: {
+            floaty: "floaty 3.2s ease-in-out infinite",
+            pop: "pop .45s ease-out",
+            shimmer: "shimmer 2.2s ease-in-out infinite",
+            wiggle: "wiggle 1.4s ease-in-out infinite",
+            fadeUp: "fadeUp .6s ease-out",
+          },
+          boxShadow: {
+            soft: "0 18px 60px rgba(255,105,180,.18)",
+          },
+        },
+      },
+    };
+  </script>
 
   <style>
-    :root{
-      --bg1:#fff3f7;
-      --bg2:#f3f7ff;
-      --ink:#232323;
-      --muted:#6b6b6b;
-      --card:#ffffffcc;
-      --stroke:#00000010;
-      --pink:#ff4d8d;
-      --purple:#7c4dff;
-      --mint:#2dd4bf;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family: ui-rounded, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
-      color:var(--ink);
-      overflow-x:hidden;
+    .bg-valentine {
       background:
-        radial-gradient(1200px 600px at 10% 10%, #ffd1e6 0%, transparent 60%),
-        radial-gradient(1200px 600px at 90% 20%, #d8d2ff 0%, transparent 55%),
-        radial-gradient(900px 600px at 50% 100%, #c9fff6 0%, transparent 55%),
-        linear-gradient(135deg, var(--bg1), var(--bg2));
+        radial-gradient(1200px 600px at 20% 10%, rgba(255,182,213,.55), transparent 55%),
+        radial-gradient(900px 600px at 80% 20%, rgba(255,151,197,.45), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(255,215,236,.7), transparent 60%),
+        linear-gradient(180deg, #ffe6f1 0%, #fff 55%, #ffeef6 100%);
     }
 
-    .wrap{
-      min-height:100%;
-      display:grid;
-      place-items:center;
-      padding:32px 16px;
-    }
-    .card{
-      width:min(920px, 100%);
-      background:var(--card);
-      border:1px solid var(--stroke);
-      border-radius:28px;
-      box-shadow: 0 18px 45px #00000014;
-      padding:26px;
-      position:relative;
-      overflow:hidden;
+    .grain::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='.10'/%3E%3C/svg%3E");
+      pointer-events: none;
+      mix-blend-mode: soft-light;
+      border-radius: inherit;
     }
 
-    /* floating hearts layer */
-    .hearts{
-      position:absolute;
-      inset:0;
-      pointer-events:none;
-      overflow:hidden;
-      border-radius:28px;
-    }
-    .heart{
-      position:absolute;
-      opacity:0;
-      animation: floatUp 2.8s ease-in forwards;
-      filter: drop-shadow(0 8px 10px #00000010);
-      user-select:none;
-    }
-    @keyframes floatUp{
-      0%{transform:translateY(20px) scale(.85); opacity:0}
-      15%{opacity:1}
-      100%{transform:translateY(-220px) scale(1.25); opacity:0}
+    /* FX layers */
+    #fxHearts { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+    #fxPetals { position: fixed; inset: 0; pointer-events: none; z-index: 0; }
+
+    /* Custom cursor heart */
+    .cursor-heart {
+      position: fixed;
+      left: 0;
+      top: 0;
+      pointer-events: none;
+      z-index: 60;
+      transform: translate(-50%, -50%);
+      font-size: 18px;
+      filter: drop-shadow(0 6px 10px rgba(255,105,180,.25));
+      opacity: .95;
     }
 
-    canvas{
-      position:absolute;
-      inset:0;
-      width:100%;
-      height:100%;
-      pointer-events:none;
-    }
-
-    .top{
-      display:flex;
-      gap:14px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      margin-bottom:10px;
-    }
-    .badge{
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      padding:10px 14px;
-      border-radius:999px;
-      background:#ffffffb8;
-      border:1px solid var(--stroke);
-      box-shadow: 0 10px 20px #00000008;
-      user-select:none;
-      font-weight:700;
-      color:#333;
-    }
-    .dot{
-      width:10px;height:10px;border-radius:50%;
-      background:linear-gradient(135deg, var(--pink), var(--purple));
-      box-shadow:0 0 0 6px #ff4d8d22;
-      animation:pulse 1.6s ease-in-out infinite;
-    }
-    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-
-    h1{
-      margin:4px 0 0;
-      font-size:clamp(26px, 3.3vw, 42px);
-      line-height:1.1;
-      letter-spacing:-0.02em;
-    }
-    .sub{
-      margin:8px 0 0;
-      color:var(--muted);
-      font-size:clamp(14px, 1.7vw, 16px);
-    }
-
-    .grid{
-      margin-top:18px;
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:16px;
-    }
-    @media (max-width: 860px){ .grid{grid-template-columns:1fr} }
-
-    .panel{
-      border:1px solid var(--stroke);
-      border-radius:24px;
-      background:#fff;
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-    }
-
-    .bubble{
-      position:absolute;
-      inset:auto auto -40px -40px;
-      width:140px;height:140px;
-      background: radial-gradient(circle at 30% 30%, #ff4d8d44, transparent 60%),
-                 radial-gradient(circle at 70% 70%, #7c4dff33, transparent 60%);
-      transform: rotate(18deg);
-      pointer-events:none;
-    }
-    .bubble.b2{
-      inset:-50px -50px auto auto;
-      width:160px;height:160px;
-      transform: rotate(-12deg);
-      background: radial-gradient(circle at 30% 30%, #2dd4bf33, transparent 60%),
-                 radial-gradient(circle at 70% 70%, #ff4d8d22, transparent 60%);
-    }
-
-    .cute{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-    }
-    .face{
-      width:92px;height:92px;
-      border-radius:24px;
-      background: linear-gradient(135deg, #fff, #fff0f6);
-      border:1px solid var(--stroke);
-      box-shadow: 0 14px 28px #00000012;
-      display:grid;
-      place-items:center;
-      position:relative;
-      flex:0 0 auto;
-    }
-    .eyes{display:flex; gap:16px; transform: translateY(-4px)}
-    .eye{
-      width:14px;height:18px;border-radius:999px;
-      background:#2b2b2b;
-      position:relative;
-      animation:blink 4.6s infinite;
-      transform-origin:center;
-    }
-    .eye:after{
-      content:"";
-      position:absolute; left:3px; top:4px;
-      width:5px;height:5px;border-radius:50%;
-      background:#fff;
-      opacity:.9;
-    }
-    @keyframes blink{0%,92%,100%{transform:scaleY(1)}94%,96%{transform:scaleY(.15)}}
-    .mouth{
-      width:26px;height:14px;
-      border:3px solid #2b2b2b;
-      border-top:0;
-      border-radius:0 0 14px 14px;
-      margin-top:10px;
-      transform: translateY(-2px);
-    }
-    .cheek{
-      position:absolute;
-      width:18px;height:12px;border-radius:999px;
-      background:#ff4d8d33;
-      top:52px;
-      filter: blur(.2px);
-    }
-    .cheek.left{left:14px}
-    .cheek.right{right:14px}
-
-    .msg{
-      margin:0;
-      font-size:16px;
-      line-height:1.55;
-      color:#2f2f2f;
-    }
-    .msg b{color:#111}
-    .hint{color:var(--muted); font-size:13px; margin:10px 0 0}
-
-    textarea{
-      width:100%;
-      margin-top:12px;
-      padding:12px 14px;
-      border-radius:16px;
-      border:1px solid var(--stroke);
-      font:inherit;
-      outline:none;
-      background:#fff;
-      box-shadow: inset 0 1px 0 #00000005;
-      min-height:150px;
-      resize:vertical;
-    }
-
-    /* ========================= */
-    /* FIX: AREA AMAN TOMBOL     */
-    /* ========================= */
-    .actions{
-      margin-top:14px;
-      display:flex;
-      gap:12px;
-      flex-wrap:wrap;
-      align-items:center;
-      position:relative;
-      min-height:120px; /* area aman agar runaway tidak nabrak */
-      padding-top:4px;
-    }
-
-    button{
-      border:0;
-      border-radius:16px;
-      padding:12px 16px;
-      font:inherit;
-      font-weight:800;
-      cursor:pointer;
-      transition: transform .08s ease, filter .2s ease;
-      user-select:none;
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      white-space:nowrap;
-      background:#fff;
-    }
-    button:active{transform:translateY(1px) scale(.99)}
-    .primary{
-      background: linear-gradient(135deg, var(--pink), var(--purple));
-      color:white;
-      box-shadow: 0 14px 28px #ff4d8d2b;
-    }
-    .ghost{
-      background:#fff;
-      border:1px solid var(--stroke);
-      color:#222;
-    }
-    .small{
-      font-size:13px;
-      padding:10px 12px;
-      border-radius:14px;
-      font-weight:800;
-    }
-
-    .runaway{
-      position:absolute;
-      left:0;
-      top:0;
-      z-index:2;
-    }
-
-    /* HP mode: tetap absolute (masih bisa gerak), tapi area aman lebih tinggi */
-    @media (max-width: 420px){
-      .actions{ min-height: 140px; }
-      .runaway{
-        position:absolute;
-        left:0;
-        top:0;
-      }
-    }
-
-    .note{
-      margin-top:14px;
-      padding:12px 14px;
-      border-radius:18px;
-      background: #f7f7ff;
-      border:1px dashed #00000018;
-      color:#333;
-    }
-    .hidden{display:none}
-
-    .sticker{
-      border:1px solid var(--stroke);
-      border-radius:18px;
-      padding:12px 12px;
-      display:flex;
-      gap:12px;
-      align-items:center;
-      background:#fff;
-      margin-bottom:10px;
-    }
-    .ico{
-      width:38px;height:38px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      background: linear-gradient(135deg, #fff0f6, #f3f0ff);
-      border:1px solid var(--stroke);
-      user-select:none;
-    }
-    .st-title{margin:0; font-weight:900}
-    .st-sub{margin:2px 0 0; color:var(--muted); font-size:13px}
-
-    .footer{
-      margin-top:10px;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:space-between;
-      color:var(--muted);
-      font-size:13px;
+    @media (hover: none) {
+      .cursor-heart { display: none; }
     }
   </style>
 </head>
 
-<body>
-  <div class="wrap">
-    <div class="card" id="card">
-      <div class="hearts" id="hearts"></div>
-      <canvas id="confetti"></canvas>
+<body class="min-h-screen bg-valentine font-cute text-pink-900 overflow-x-hidden">
+  <!-- FX canvases -->
+  <canvas id="fxPetals"></canvas>
+  <canvas id="fxHearts"></canvas>
+  <div id="cursor" class="cursor-heart">💗</div>
 
-      <div class="top">
-        <div class="badge"><span class="dot"></span><span id="badgeText">Mode: minta maaf lucu tapi serius 💚</span></div>
-        <div class="badge">📅 <span id="today"></span></div>
-      </div>
+  <!-- Background Music (real mp3) -->
+  <audio id="bgm" src="assets/bgm.mp3" loop preload="auto"></audio>
 
-      <h1>Maafin Leenka yaaa 🥺💚</h1>
-      <p class="sub">Leenka malu 👉👈 tapi pengen benerin, bukan diem-dieman.</p>
-
-      <div class="grid">
-        <div class="panel">
-          <div class="bubble"></div>
-          <div class="bubble b2"></div>
-
-          <div class="cute">
-            <div class="face" aria-hidden="true">
-              <div class="cheek left"></div>
-              <div class="cheek right"></div>
-              <div>
-                <div class="eyes">
-                  <div class="eye"></div>
-                  <div class="eye"></div>
-                </div>
-                <div class="mouth"></div>
-              </div>
-            </div>
-
-            <div>
-              <p class="msg" id="msgPreview"></p>
-              <p class="hint">Kamu bisa edit pesannya di bawah (opsional), nanti preview-nya ikut berubah.</p>
-            </div>
-          </div>
-
-          <textarea id="messageBox"></textarea>
-
-          <div class="actions" id="actions">
-            <button class="primary" id="btnYes">✅ Maafin Leenka <span>✨</span></button>
-            <button class="ghost runaway" id="btnNo" type="button">🙅‍♀️ Ngga dulu</button>
-            <button class="ghost small" id="btnCopy" type="button">📋 Salin pesan</button>
-            <button class="ghost small" id="btnHearts" type="button">💖 Kirim hati</button>
-          </div>
-
-          <div class="note hidden" id="result">
-            <b>Yeay! 🥹💗</b><br/>
-            Makasih udah mau maafin. Leenka janji bakal lebih jaga sikap & komunikasi.
-            <div style="margin-top:10px; color:#555" id="resultExtra"></div>
-          </div>
+  <main class="relative z-10">
+    <!-- Header -->
+    <header class="max-w-6xl mx-auto px-4 pt-6">
+      <div class="flex items-center justify-between gap-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">💗</span>
+          <span class="font-semibold tracking-wide">Pinky Love</span>
         </div>
 
-        <div class="panel">
-          <div class="sticker">
-            <div class="ico">🍵</div>
-            <div>
-              <p class="st-title">Matcha peace offering</p>
-              <p class="st-sub">Kita balik bikin matcha lagi, no diem-dieman club ya.</p>
-            </div>
+        <div class="flex items-center gap-2">
+          <button
+            id="btnPetals"
+            class="px-4 py-2 rounded-full bg-white/70 hover:bg-white border border-pink-200 shadow-sm text-sm active:scale-[0.98] transition"
+          >
+            🌸 Petals: On
+          </button>
+
+          <button
+            id="btnMute"
+            class="px-4 py-2 rounded-full bg-white/70 hover:bg-white border border-pink-200 shadow-sm text-sm active:scale-[0.98] transition"
+          >
+            🔊 Music: On
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <!-- Left -->
+        <div class="space-y-5">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/70 border border-pink-200 shadow-sm">
+            <span>✨</span>
+            <span class="text-sm">Valentine’s Day Special</span>
           </div>
-          <div class="sticker">
-            <div class="ico">🏪</div>
-            <div>
-              <p class="st-title">Indomaret moment</p>
-              <p class="st-sub">Leenka beneran nggak sengaja ninggalin kamu tadi 😭</p>
-            </div>
+
+          <h1 class="text-4xl md:text-5xl font-bold leading-tight">
+            Happy Valentine’s Day
+            <span class="inline-block animate-wiggle">💖</span>
+          </h1>
+
+          <p class="text-lg text-pink-800/90">
+            <b>Haii haii sayang</b>, <b>Happy Valentine yaaa cantikkk acuuuu</b>, <b>iloveeeyouuuuu</b> 🌸✨
+          </p>
+
+          <div class="flex flex-wrap gap-3">
+            <button
+              id="btnLove"
+              class="group relative overflow-hidden px-5 py-3 rounded-2xl bg-pink-500 text-white shadow-lg shadow-pink-200 transition active:scale-[0.97] hover:-translate-y-[1px]"
+            >
+              <span class="relative z-10">LOVE BOOM 💥💗</span>
+              <span class="absolute inset-0 opacity-30 bg-white/40 -translate-x-[120%] group-hover:animate-shimmer"></span>
+            </button>
+
+            <button
+              id="btnOpenLetter"
+              class="px-5 py-3 rounded-2xl bg-white/70 hover:bg-white text-pink-700 border border-pink-200 shadow-sm transition active:scale-[0.97] hover:-translate-y-[1px]"
+            >
+              Open Love Letter 💌
+            </button>
           </div>
-          <div class="sticker">
-            <div class="ico">🫶</div>
-            <div>
-              <p class="st-title">No ngilang</p>
-              <p class="st-sub">Kalau kamu butuh waktu, Leenka tunggu dengan sopan.</p>
+
+          <div class="rounded-3xl bg-white/60 backdrop-blur border border-pink-200 shadow-soft p-5 relative overflow-hidden grain">
+            <p class="text-sm text-pink-700/80">Message of the day</p>
+            <p id="typewriter" class="text-lg md:text-xl font-semibold leading-relaxed mt-1"></p>
+
+            <div class="mt-3 text-sm text-pink-700/70">
+              <span class="inline-flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-pink-400"></span>
+                <span id="loveCount">0</span> love clicks
+              </span>
             </div>
           </div>
 
-          <div class="footer">
-            <span>Made with 🥺💚</span>
-            <span id="counter">Hati terkirim: 0</span>
+          <p id="musicHint" class="text-sm text-pink-800/70 hidden">
+            Musik tidak bisa autoplay. Klik tombol <b>Music</b> atau klik layar sekali ya 🎵
+          </p>
+        </div>
+
+        <!-- Right Card -->
+        <div class="relative">
+          <div
+            id="tiltCard"
+            class="grain relative rounded-3xl bg-white/65 backdrop-blur border border-pink-200 shadow-xl shadow-pink-100 p-6 md:p-8 transition will-change-transform"
+          >
+            <div class="flex items-start justify-between">
+              <div>
+                <h2 class="text-2xl font-semibold">To: My Favorite Icaaaa 🫶</h2>
+                <p class="text-pink-800/80 mt-1">Hai sayang aku Ica, loveeeyouu.</p>
+              </div>
+              <div class="text-3xl animate-floaty">💌</div>
+            </div>
+
+            <div class="mt-6 rounded-2xl bg-pink-50/80 border border-pink-200 p-5">
+              <p id="mainMsg" class="text-lg leading-relaxed">
+                hai kamu, manusia cantik 🌷<br><br>
+
+                aku cuma mau bilang makasih… makasih banget ya udah hadir di hidup aku. makasih karena kamu selalu berusaha ada, selalu nyempetin waktu, selalu sabar sama aku yang kadang suka random, kadang suka ngeluh, kadang cuma pengen dimengerti aja.<br><br>
+
+                aku ngerasa beruntung banget bisa punya kamu. kamu itu bukan cuma cantik dari luar, tapi juga hangat dari cara kamu memperlakukan orang. kamu bisa bikin aku ngerasa tenang cuma lewat hal-hal kecil—cara kamu ngomong, cara kamu peduli, cara kamu tetap berusaha walaupun kamu capek.<br><br>
+
+                aku mau kamu tau satu hal yang paling penting: aku sayang kamu. sayang banget. dan sayang aku ke kamu bukan yang cuma manis di awal doang, tapi sayang yang bikin aku pengen tetep ada, pengen jagain, pengen ngusahain kamu jadi bahagia. kamu itu salah satu alasan kenapa aku sekarang lebih semangat jalanin hari.<br><br>
+
+                makasih ya udah nerima aku apa adanya. makasih karena kamu nggak maksa aku jadi orang lain. sama kamu aku ngerasa aman, ngerasa nyaman, ngerasa bisa jadi diri sendiri tanpa takut dinilai kurang. aku bisa cerita apapun, bahkan hal yang kadang aku sendiri bingung ngomonginnya—tapi kamu tetap dengerin. itu buat aku berharga banget.<br><br>
+
+                aku juga bersyukur karena kamu bikin aku belajar banyak hal. kamu bikin aku belajar sabar, belajar lebih peka, belajar cara mencintai yang bener. kamu bikin aku pengen jadi versi terbaik dari aku—bukan karena kamu nuntut, tapi karena aku pengen kamu bangga. pengen kamu ngerasa “aku nggak salah milih dia.”<br><br>
+
+                di dunia ini mungkin banyak orang yang lebih ini itu… tapi aku milih kamu karena kamu punya cara sendiri buat bikin aku betah. kamu punya aura yang bikin aku pengen pulang. kamu itu “rumah” yang aku cari-cari tanpa sadar.<br><br>
+
+                kalau suatu hari aku bikin kamu kecewa, bikin kamu capek, atau bikin kamu kepikiran, maafin aku ya. aku masih belajar jadi dewasa. tapi aku janji aku mau belajar bareng kamu. kita nggak harus selalu sempurna, yang penting kita sama-sama mau bertahan dan saling ngerti.<br><br>
+
+                kalau ada masalah, jangan dipendem sendirian ya. cerita ke aku. aku pengen jadi orang pertama yang kamu cari pas kamu lagi nggak baik-baik aja. aku pengen nemenin kamu di hari-hari seneng, tapi juga di hari-hari berat. kita lewatin bareng-bareng ya.<br><br>
+
+                aku nggak minta kamu jadi siapapun—cukup jadi kamu. karena kamu yang sekarang aja udah lebih dari cukup buat aku. tetap jadi kamu yang manis, yang kuat, yang kadang sensitif tapi itu justru bikin kamu manusia banget. aku sayang kamu, dan aku bangga punya kamu.<br><br>
+
+                love you so much, perempuan baik hati 🤍🎀
+              </p>
+
+              <p class="mt-3 text-sm text-pink-800/70">
+                — from: <span class="font-semibold" id="fromName">someone who cares 💞</span>
+              </p>
+            </div>
+
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <button
+                id="btnCopy"
+                class="px-4 py-2 rounded-full bg-white hover:bg-pink-50 border border-pink-200 shadow-sm text-sm transition active:scale-[0.98]"
+              >
+                Copy message 📋
+              </button>
+
+              <button
+                id="btnSurprise"
+                class="px-4 py-2 rounded-full bg-white hover:bg-pink-50 border border-pink-200 shadow-sm text-sm transition active:scale-[0.98]"
+              >
+                Surprise 🎀
+              </button>
+
+              <button
+                id="btnMiniBoom"
+                class="px-4 py-2 rounded-full bg-pink-500 text-white shadow-sm shadow-pink-200 text-sm transition active:scale-[0.98]"
+              >
+                Mini hearts 💗
+              </button>
+            </div>
           </div>
+
+          <div class="absolute -top-4 -right-3 rotate-6 rounded-2xl bg-pink-500 text-white px-4 py-2 shadow-lg shadow-pink-200">
+            <span class="font-semibold">Be Mine 💘</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+    <section class="max-w-6xl mx-auto px-4 pb-10">
+      <div class="flex items-center justify-between gap-4 flex-wrap">
+        <div>
+          <h3 class="text-2xl md:text-3xl font-bold">Gallery Kamu 📷</h3>
+          <p class="text-pink-800/80 mt-1">
+            Taruh fotomu di folder <b>assets/</b>, lalu edit list nama filenya di JS.
+          </p>
+        </div>
+
+        <button
+          id="btnShuffleGallery"
+          class="px-4 py-2 rounded-full bg-white hover:bg-pink-50 border border-pink-200 shadow-sm text-sm transition active:scale-[0.98]"
+        >
+          Shuffle ✨
+        </button>
+      </div>
+
+      <div id="galleryGrid" class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+        <!-- injected by JS -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="max-w-6xl mx-auto px-4 pb-12">
+      <div class="rounded-3xl bg-white/60 backdrop-blur border border-pink-200 p-6 text-sm text-pink-800/80 shadow-soft">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <p>Love youuu 💗 .</p>
+          <p class="text-xs">Aku sayang kamu nong nong iloveeeyouuuuu</p>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal Love Letter -->
+  <div id="modalWrap" class="fixed inset-0 z-50 hidden">
+    <div id="modalBackdrop" class="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+
+    <div class="relative w-full h-full grid place-items-center p-4">
+      <div
+        id="modal"
+        class="w-full max-w-lg rounded-3xl bg-white/75 backdrop-blur border border-pink-200 shadow-xl shadow-pink-100 p-6 md:p-7 grain animate-pop"
+      >
+        <div class="flex items-start justify-between gap-3">
+          <div>
+            <h4 class="text-xl md:text-2xl font-bold">Love Letter 💌</h4>
+            <p class="text-pink-800/80 text-sm mt-1">Isi nama + pesan biar jadi personal.</p>
+          </div>
+
+          <button
+            id="btnCloseModal"
+            class="w-10 h-10 rounded-2xl bg-white hover:bg-pink-50 border border-pink-200 shadow-sm grid place-items-center transition active:scale-[0.98]"
+          >
+            ✖️
+          </button>
+        </div>
+
+        <div class="mt-5 space-y-4">
+          <div>
+            <label class="text-sm text-pink-800/80">Nama dari (pengirim)</label>
+            <input
+              id="inpName"
+              class="mt-1 w-full px-4 py-3 rounded-2xl bg-white/70 border border-pink-200 outline-none focus:ring-2 focus:ring-pink-300"
+              placeholder="contoh: Roy 💗"
+            />
+          </div>
+
+          <div>
+            <label class="text-sm text-pink-800/80">Pesan</label>
+            <textarea
+              id="inpMsg"
+              rows="4"
+              class="mt-1 w-full px-4 py-3 rounded-2xl bg-white/70 border border-pink-200 outline-none focus:ring-2 focus:ring-pink-300"
+              placeholder="Tulis pesan valentine kamu di sini..."
+            ></textarea>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+            <button
+              id="btnApplyLetter"
+              class="px-5 py-3 rounded-2xl bg-pink-500 hover:bg-pink-600 text-white shadow-lg shadow-pink-200 transition active:scale-[0.97]"
+            >
+              Apply 💖
+            </button>
+
+            <button
+              id="btnRandomLetter"
+              class="px-5 py-3 rounded-2xl bg-white hover:bg-pink-50 border border-pink-200 shadow-sm transition active:scale-[0.97]"
+            >
+              Random cute text ✨
+            </button>
+          </div>
+
+          <p class="text-xs text-pink-700/70">
+            Tip: setelah apply, nyalain petals + musik biar kerasa vibes-nya 😆🌸
+          </p>
         </div>
       </div>
     </div>
   </div>
 
-<script>
-  // ====== Init date ======
-  const now = new Date();
-  const opts = { weekday: "long", year:"numeric", month:"long", day:"numeric" };
-  document.querySelector("#today").textContent = now.toLocaleDateString("id-ID", opts);
+  <script>
+    // ====== CONFIG: GANTI INI SESUAI FILE FOTO KAMU ======
+    let galleryPhotos = [
+      "assets/photo1.jpg",
+      "assets/photo2.jpg",
+      "assets/photo3.jpg",
+      "assets/photo4.jpg",
+      // "assets/photo5.jpg",
+    ];
 
-  // ====== Default message ======
-  const defaultText =
-`Elee maafin Leenka yaaa 🥺
-Leenka bukan sengaja ninggalin kamu pas mau ke Indomaret tadiii.
-Leenka cuma mikir bentar doang, eh malah kejadian beneran 😭
+    // ====== Utils ======
+    const rand = (min, max) => Math.random() * (max - min) + min;
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
-Padahal tadi kita fun-fun, bikin matcha, ketawa-ketawa,
-kok sekarang malah jadi diem-dieman… huuuu 💔
+    // ====== Background music ======
+    const bgm = document.getElementById("bgm");
+    const btnMute = document.getElementById("btnMute");
+    const musicHint = document.getElementById("musicHint");
+    let musicOn = true;
 
-Leenka mau minta maaf tapi malu 👉👈
-takut kamu kesel, takut suasananya jadi aneh,
-padahal Leenka nggak ada niat bikin kamu ngerasa sendirian sama sekali.
+    bgm.volume = 0.45; // lembut
 
-Maafin Leenka yaaa,
-biar kalian bisa balik ketawa lagi,
-bikin matcha lagi,
-dan nggak ada lagi yang dipendem 🫶💚`;
-
-  const msgBox = document.querySelector("#messageBox");
-  const preview = document.querySelector("#msgPreview");
-  msgBox.value = defaultText;
-
-  const escapeHtml = (s) =>
-    s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;")
-     .replaceAll('"',"&quot;").replaceAll("'","&#039;");
-
-  function renderPreview(){
-    const t = msgBox.value.trim() || defaultText;
-    preview.innerHTML = escapeHtml(t).replace(/\n/g, "<br/>");
-  }
-  msgBox.addEventListener("input", renderPreview);
-  renderPreview();
-
-  // ====== Hearts ======
-  const heartsBox = document.querySelector("#hearts");
-  const card = document.querySelector("#card");
-  let heartsSent = 0;
-  const counter = document.querySelector("#counter");
-
-  function spawnHeart(x=null){
-    const h = document.createElement("div");
-    h.className = "heart";
-    const icons = ["💗","💖","💘","💕","💞","🫶","🥺","💚"];
-    h.textContent = icons[Math.floor(Math.random()*icons.length)];
-    const rect = card.getBoundingClientRect();
-    const left = x ?? (Math.random() * rect.width);
-    h.style.left = left + "px";
-    h.style.bottom = "-10px";
-    h.style.fontSize = (14 + Math.random()*18) + "px";
-    h.style.animationDuration = (2.2 + Math.random()*1.4) + "s";
-    heartsBox.appendChild(h);
-    setTimeout(()=> h.remove(), 3300);
-  }
-
-  document.querySelector("#btnHearts").addEventListener("click", ()=>{
-    heartsSent += 7;
-    counter.textContent = `Hati terkirim: ${heartsSent}`;
-    for(let i=0;i<8;i++) setTimeout(()=>spawnHeart(), i*80);
-  });
-
-  // ====== Runaway "No" button ======
-  const btnNo = document.querySelector("#btnNo");
-  const actions = document.querySelector("#actions");
-
-  const clamp = (n,a,b)=>Math.max(a,Math.min(b,n));
-
-  function placeNoButton(){
-    // IMPORTANT: gunakan rect actions (area aman sudah dibesarkan via CSS)
-    const a = actions.getBoundingClientRect();
-    const maxX = a.width - btnNo.offsetWidth;
-    const maxY = a.height - btnNo.offsetHeight;
-
-    // Jika maxX/maxY negatif (layar super kecil), set ke 0 biar gak hilang
-    const safeMaxX = Math.max(0, maxX);
-    const safeMaxY = Math.max(0, maxY);
-
-    const x = clamp(Math.random()*safeMaxX, 0, safeMaxX);
-    const y = clamp(Math.random()*safeMaxY, 0, safeMaxY);
-
-    btnNo.style.transform = `translate(${x}px, ${y}px)`;
-  }
-  requestAnimationFrame(placeNoButton);
-
-  ["mouseenter","touchstart"].forEach(evt=>{
-    btnNo.addEventListener(evt, ()=>{
-      placeNoButton();
-      spawnHeart();
-    }, {passive:true});
-  });
-
-  btnNo.addEventListener("click", ()=>{
-    document.querySelector("#badgeText").textContent = "Mode: gapapa, pelan-pelan ya 🙏";
-  });
-
-  // ====== Copy message ======
-  document.querySelector("#btnCopy").addEventListener("click", async ()=>{
-    const text = (msgBox.value || defaultText).trim();
-    try{
-      await navigator.clipboard.writeText(text);
-      document.querySelector("#badgeText").textContent = "Mode: pesan tersalin ✅";
-      for(let i=0;i<5;i++) setTimeout(()=>spawnHeart(), i*120);
-    }catch{
-      alert("Browser kamu nggak ngizinin clipboard. Coba copy manual ya.");
+    async function tryPlayMusic() {
+      if (!musicOn) return;
+      try {
+        await bgm.play();
+        musicHint.classList.add("hidden");
+      } catch {
+        musicHint.classList.remove("hidden");
+      }
     }
-  });
 
-  // ====== Confetti ======
-  const canvas = document.querySelector("#confetti");
-  const ctx = canvas.getContext("2d");
-  let pieces = [];
-  let running = false;
-
-  function resizeCanvas(){
-    const rect = card.getBoundingClientRect();
-    canvas.width = Math.floor(rect.width * devicePixelRatio);
-    canvas.height = Math.floor(rect.height * devicePixelRatio);
-    ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
-  }
-  window.addEventListener("resize", resizeCanvas);
-  resizeCanvas();
-
-  function startConfetti(){
-    resizeCanvas();
-    const rect = card.getBoundingClientRect();
-    const originX = rect.width * 0.35;
-    const originY = rect.height * 0.18;
-
-    pieces = [];
-    const n = 170;
-    const shapes = ["rect","circle","heart"];
-
-    for(let i=0;i<n;i++){
-      pieces.push({
-        x: originX + (Math.random()*60 - 30),
-        y: originY + (Math.random()*40 - 20),
-        vx: (Math.random()*6 - 3),
-        vy: -(Math.random()*7 + 2),
-        g: 0.18 + Math.random()*0.12,
-        r: 4 + Math.random()*5,
-        rot: Math.random()*Math.PI,
-        vr: (Math.random()*0.25 - 0.125),
-        life: 90 + Math.floor(Math.random()*40),
-        shape: shapes[Math.floor(Math.random()*shapes.length)],
-        col: `hsl(${Math.floor(Math.random()*360)}, 80%, 75%)`
-      });
-    }
-    running = true;
-    tick();
-  }
-
-  function drawHeart(x,y,s,rot,color){
-    ctx.save();
-    ctx.translate(x,y);
-    ctx.rotate(rot);
-    ctx.scale(s/12, s/12);
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.moveTo(0, 3);
-    ctx.bezierCurveTo(0, -3, -6, -3, -6, 2);
-    ctx.bezierCurveTo(-6, 6, -2, 8, 0, 10);
-    ctx.bezierCurveTo(2, 8, 6, 6, 6, 2);
-    ctx.bezierCurveTo(6, -3, 0, -3, 0, 3);
-    ctx.closePath();
-    ctx.fill();
-    ctx.restore();
-  }
-
-  function tick(){
-    if(!running) return;
-    const w = canvas.width / devicePixelRatio;
-    const h = canvas.height / devicePixelRatio;
-
-    ctx.clearRect(0,0,w,h);
-
-    pieces.forEach(p=>{
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += p.g;
-      p.rot += p.vr;
-      p.life -= 1;
-
-      ctx.fillStyle = p.col;
-
-      if(p.shape === "rect"){
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.fillRect(-p.r, -p.r, p.r*2, p.r*2);
-        ctx.restore();
-      } else if(p.shape === "circle"){
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r*0.9, 0, Math.PI*2);
-        ctx.fill();
+    btnMute.addEventListener("click", async () => {
+      musicOn = !musicOn;
+      if (musicOn) {
+        btnMute.textContent = "🔊 Music: On";
+        await tryPlayMusic();
       } else {
-        drawHeart(p.x, p.y, p.r*2.1, p.rot, p.col);
+        btnMute.textContent = "🔇 Music: Off";
+        bgm.pause();
       }
     });
 
-    pieces = pieces.filter(p=>p.life>0 && p.y < h + 40);
+    // coba autoplay (kalau keblok, muncul hint)
+    tryPlayMusic();
 
-    if(pieces.length === 0){
-      running = false;
-      ctx.clearRect(0,0,w,h);
-      return;
+    // workaround autoplay: sekali user klik layar
+    window.addEventListener(
+      "pointerdown",
+      () => {
+        if (musicOn && bgm.paused) tryPlayMusic();
+      },
+      { once: false }
+    );
+
+    // ====== Love count ======
+    let loves = 0;
+    const loveCountEl = document.getElementById("loveCount");
+    function incLove() {
+      loves++;
+      loveCountEl.textContent = loves;
     }
-    requestAnimationFrame(tick);
-  }
 
-  // ====== Yes button behavior ======
-  const btnYes = document.querySelector("#btnYes");
-  const result = document.querySelector("#result");
-  const resultExtra = document.querySelector("#resultExtra");
+    // ====== Typewriter ======
+    const typeEl = document.getElementById("typewriter");
+    const typeLines = [
+      "Kamu itu alasan kenapa hari jadi terasa lebih manis. 💗",
+      "Kalau ada tombol ‘peluk’, aku bakal spam terus. 🫶",
+      "Valentine cuma sehari, tapi aku sukanya tiap hari. 🎀",
+    ];
+    let lineIdx = 0;
+    let charIdx = 0;
 
-  btnYes.addEventListener("click", ()=>{
-    document.querySelector("#badgeText").textContent = "Mode: udah dimaafin! 🥹💚";
-    result.classList.remove("hidden");
-    startConfetti();
+    function typeTick() {
+      const txt = typeLines[lineIdx];
+      typeEl.textContent = txt.slice(0, charIdx++);
+      if (charIdx <= txt.length) {
+        requestAnimationFrame(typeTick);
+      } else {
+        setTimeout(() => {
+          lineIdx = (lineIdx + 1) % typeLines.length;
+          charIdx = 0;
+          typeEl.classList.remove("animate-pop");
+          void typeEl.offsetWidth;
+          typeEl.classList.add("animate-pop");
+          typeTick();
+        }, 1400);
+      }
+    }
+    typeTick();
 
-    for(let i=0;i<10;i++) setTimeout(()=>spawnHeart(), i*70);
+    // ====== Cursor + sparkle ======
+    const cursor = document.getElementById("cursor");
 
-    resultExtra.innerHTML = "Deal ya… abis ini kita bikin matcha lagi 🍵 terus ngobrol baik-baik.";
-  });
-</script>
+    window.addEventListener("mousemove", (e) => {
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
+      if (Math.random() < 0.18) sparkle(e.clientX, e.clientY);
+    });
+
+    function sparkle(x, y) {
+      const el = document.createElement("div");
+      el.textContent = ["✨", "✦", "✧"][Math.floor(Math.random() * 3)];
+      el.className = "fixed z-50 select-none";
+      el.style.left = x + rand(-6, 6) + "px";
+      el.style.top = y + rand(-6, 6) + "px";
+      el.style.fontSize = rand(10, 16) + "px";
+      el.style.opacity = "0.95";
+      document.body.appendChild(el);
+
+      const dx = rand(-30, 30);
+      const dy = rand(-40, -10);
+
+      el.animate(
+        [
+          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+          {
+            transform: `translate(${dx}px, ${dy}px) rotate(${rand(-30, 30)}deg)`,
+            opacity: 0,
+          },
+        ],
+        { duration: rand(450, 750), easing: "cubic-bezier(.2,.8,.2,1)" }
+      );
+
+      setTimeout(() => el.remove(), 800);
+    }
+
+    // ====== Tilt card (desktop hover) ======
+    const tiltCard = document.getElementById("tiltCard");
+    const canTilt = matchMedia("(hover:hover)").matches;
+
+    function onMoveTilt(e) {
+      const r = tiltCard.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width;
+      const y = (e.clientY - r.top) / r.height;
+      const rx = (0.5 - y) * 8;
+      const ry = (x - 0.5) * 10;
+      tiltCard.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-2px)`;
+    }
+
+    function resetTilt() {
+      tiltCard.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg)";
+    }
+
+    if (canTilt) {
+      tiltCard.addEventListener("mousemove", onMoveTilt);
+      tiltCard.addEventListener("mouseleave", resetTilt);
+    }
+
+    // ====== Modal Love Letter ======
+    const modalWrap = document.getElementById("modalWrap");
+    const btnOpenLetter = document.getElementById("btnOpenLetter");
+    const btnCloseModal = document.getElementById("btnCloseModal");
+    const backdrop = document.getElementById("modalBackdrop");
+
+    const inpName = document.getElementById("inpName");
+    const inpMsg = document.getElementById("inpMsg");
+    const mainMsg = document.getElementById("mainMsg");
+    const fromName = document.getElementById("fromName");
+
+    const randomLetters = [
+      "Hari ini aku mau bilang: kamu itu tempat pulang yang paling nyaman. 💞",
+      "Aku nggak butuh alasan buat sayang kamu… kamu sendiri sudah cukup. 💗",
+      "Kalau senyum kamu obat, aku rela ketergantungan. 😆💖",
+    ];
+
+    function openModal() {
+      modalWrap.classList.remove("hidden");
+      setTimeout(() => inpName.focus(), 50);
+    }
+
+    function closeModal() {
+      modalWrap.classList.add("hidden");
+    }
+
+    btnOpenLetter.addEventListener("click", openModal);
+    btnCloseModal.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !modalWrap.classList.contains("hidden")) closeModal();
+    });
+
+    document.getElementById("btnRandomLetter").addEventListener("click", () => {
+      inpMsg.value = randomLetters[Math.floor(Math.random() * randomLetters.length)];
+    });
+
+    document.getElementById("btnApplyLetter").addEventListener("click", () => {
+      const name = inpName.value.trim();
+      const msg = inpMsg.value.trim();
+
+      if (name) fromName.textContent = name;
+      if (msg) mainMsg.textContent = msg;
+
+      mainMsg.classList.remove("animate-pop");
+      void mainMsg.offsetWidth;
+      mainMsg.classList.add("animate-pop");
+
+      incLove();
+      confettiBurst(innerWidth * 0.62, innerHeight * 0.45);
+      closeModal();
+    });
+
+    // ====== Buttons: Copy / Surprise / Mini Boom ======
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(mainMsg.textContent);
+        toast("Copied! 📋💗");
+      } catch {
+        toast("Gagal copy (izin browser).");
+      }
+    });
+
+    const surprises = [
+      "“Aku suka kamu. Sesederhana itu.” 💖",
+      "“Kalau kamu capek, sini—aku peluk.” 🫶",
+      "“Kamu tuh lucu banget… bikin aku senyum sendiri.” 🌸",
+      "“Bareng kamu, hal kecil jadi spesial.” 🍓",
+      "“Kamu favoritku tiap hari, bukan cuma Valentine.” 🎀",
+    ];
+
+    document.getElementById("btnSurprise").addEventListener("click", () => {
+      mainMsg.textContent = surprises[Math.floor(Math.random() * surprises.length)];
+      mainMsg.classList.remove("animate-pop");
+      void mainMsg.offsetWidth;
+      mainMsg.classList.add("animate-pop");
+      boom(innerWidth * 0.62, innerHeight * 0.4);
+    });
+
+    document.getElementById("btnMiniBoom").addEventListener("click", () => {
+      boom(innerWidth * 0.7, innerHeight * 0.5);
+    });
+
+    // ====== Toast ======
+    function toast(text) {
+      const el = document.createElement("div");
+      el.className =
+        "fixed left-1/2 -translate-x-1/2 bottom-6 z-50 px-4 py-2 rounded-full bg-white border border-pink-200 shadow-lg text-sm text-pink-800 animate-pop";
+      el.textContent = text;
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1500);
+    }
+
+    // ====== LOVE BOOM ======
+    document.getElementById("btnLove").addEventListener("click", () => {
+      incLove();
+      screenShake();
+      confettiBurst(innerWidth * 0.55, innerHeight * 0.35);
+      boom(innerWidth * 0.5, innerHeight * 0.35);
+    });
+
+    // Click anywhere -> hearts
+    window.addEventListener("click", (e) => {
+      const t = e.target;
+      if (t.closest("button") || t.closest("#modal")) return;
+      for (let i = 0; i < 5; i++) spawnBurstHeart(e.clientX, e.clientY);
+    });
+
+    function screenShake() {
+      const root = document.querySelector("main");
+      root.animate(
+        [
+          { transform: "translateX(0)" },
+          { transform: "translateX(-6px)" },
+          { transform: "translateX(6px)" },
+          { transform: "translateX(-4px)" },
+          { transform: "translateX(4px)" },
+          { transform: "translateX(0)" },
+        ],
+        { duration: 350, easing: "ease-out" }
+      );
+    }
+
+    // ====== DOM heart burst ======
+    function boom(x, y) {
+      for (let i = 0; i < 12; i++) spawnBurstHeart(x + rand(-18, 18), y + rand(-18, 18));
+    }
+
+    function spawnBurstHeart(x, y) {
+      const el = document.createElement("div");
+      el.textContent = ["💗", "💖", "💕", "💘", "💞"][Math.floor(Math.random() * 5)];
+      el.className = "fixed z-40 select-none";
+      el.style.left = x + "px";
+      el.style.top = y + "px";
+      el.style.fontSize = rand(16, 28) + "px";
+      document.body.appendChild(el);
+
+      const dx = rand(-140, 140);
+      const dy = rand(-170, -70);
+      const rot = rand(-60, 60);
+
+      el.animate(
+        [
+          { transform: "translate(0,0) rotate(0deg)", opacity: 1 },
+          { transform: `translate(${dx}px, ${dy}px) rotate(${rot}deg)`, opacity: 0 },
+        ],
+        { duration: rand(700, 1100), easing: "cubic-bezier(.2,.8,.2,1)" }
+      );
+
+      setTimeout(() => el.remove(), 1200);
+    }
+
+    // ====== Gallery ======
+    const galleryGrid = document.getElementById("galleryGrid");
+
+    function renderGallery(list) {
+      galleryGrid.innerHTML = "";
+      list.forEach((src, i) => {
+        const card = document.createElement("div");
+        card.className =
+          "grain rounded-3xl bg-white/70 backdrop-blur border border-pink-200 shadow-sm overflow-hidden transition hover:-translate-y-[2px] hover:shadow-soft";
+
+        card.innerHTML = `
+          <div class="aspect-[4/5] bg-pink-50/60">
+            <img
+              src="${src}"
+              alt="photo ${i + 1}"
+              class="w-full h-full object-cover"
+              onerror="this.style.display='none'; this.parentElement.classList.add('grid','place-items-center'); this.parentElement.innerHTML='🖼️<div class=\\'text-xs mt-2 text-pink-700/70\\'>Foto tidak ditemukan: ${src}</div>';"
+            />
+          </div>
+          <div class="p-3 text-sm text-pink-800/80 text-center">memory #${i + 1} 💗</div>
+        `;
+        galleryGrid.appendChild(card);
+      });
+    }
+
+    renderGallery(galleryPhotos);
+
+    document.getElementById("btnShuffleGallery").addEventListener("click", () => {
+      galleryPhotos = [...galleryPhotos].sort(() => Math.random() - 0.5);
+      renderGallery(galleryPhotos);
+      confettiBurst(innerWidth * 0.5, innerHeight * 0.78);
+    });
+
+    // ====== CANVAS FX: Hearts + Confetti ======
+    const cHearts = document.getElementById("fxHearts");
+    const ctxH = cHearts.getContext("2d");
+
+    let WH = 0,
+      HH = 0,
+      dpr = 1;
+
+    function resizeHearts() {
+      dpr = devicePixelRatio || 1;
+      cHearts.width = innerWidth * dpr;
+      cHearts.height = innerHeight * dpr;
+      cHearts.style.width = innerWidth + "px";
+      cHearts.style.height = innerHeight + "px";
+      ctxH.setTransform(dpr, 0, 0, dpr, 0, 0);
+      WH = innerWidth;
+      HH = innerHeight;
+    }
+
+    window.addEventListener("resize", resizeHearts);
+    resizeHearts();
+
+    const floatHearts = [];
+    const confetti = [];
+
+    function addFloatingHeart() {
+      floatHearts.push({
+        x: rand(0, WH),
+        y: HH + rand(20, 160),
+        s: rand(10, 22),
+        vy: rand(0.35, 1.05),
+        vx: rand(-0.22, 0.22),
+        a: rand(0.6, 0.92),
+        wob: rand(0, Math.PI * 2),
+        wobSpd: rand(0.01, 0.03),
+        emoji: ["💗", "💕", "💖"][Math.floor(Math.random() * 3)],
+      });
+
+      if (floatHearts.length > 70) floatHearts.shift();
+    }
+
+    setInterval(addFloatingHeart, 260);
+
+    function confettiBurst(x, y) {
+      for (let i = 0; i < 70; i++) {
+        confetti.push({
+          x,
+          y,
+          vx: rand(-3.8, 3.8),
+          vy: rand(-6.3, -1.4),
+          g: rand(0.12, 0.2),
+          r: rand(1, 3),
+          life: rand(55, 90),
+          t: 0,
+        });
+      }
+    }
+
+    function roundRect(ctx, x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x + r, y);
+      ctx.arcTo(x + w, y, x + w, y + h, r);
+      ctx.arcTo(x + w, y + h, x, y + h, r);
+      ctx.arcTo(x, y + h, x, y, r);
+      ctx.arcTo(x, y, x + w, y, r);
+      ctx.closePath();
+    }
+
+    function drawHearts() {
+      ctxH.clearRect(0, 0, WH, HH);
+
+      // floating hearts
+      floatHearts.forEach((p) => {
+        p.wob += p.wobSpd;
+        p.x += p.vx + Math.sin(p.wob) * 0.35;
+        p.y -= p.vy;
+        p.a = clamp(p.a - 0.00085, 0, 1);
+
+        ctxH.globalAlpha = p.a;
+        ctxH.font = `${p.s}px Fredoka, system-ui`;
+        ctxH.fillText(p.emoji, p.x, p.y);
+
+        if (p.y < -30 || p.a <= 0) {
+          p.y = HH + rand(20, 160);
+          p.x = rand(0, WH);
+          p.a = rand(0.6, 0.92);
+        }
+      });
+
+      // confetti
+      confetti.forEach((c, idx) => {
+        c.t++;
+        c.x += c.vx;
+        c.y += c.vy;
+        c.vy += c.g;
+        c.life--;
+
+        ctxH.save();
+        ctxH.translate(c.x, c.y);
+        ctxH.rotate((c.t / 10) % (Math.PI * 2));
+        ctxH.globalAlpha = clamp(c.life / 90, 0, 1);
+        ctxH.fillStyle = "rgba(255,105,180,0.75)";
+        roundRect(ctxH, -c.r * 2, -c.r, c.r * 4, c.r * 2, c.r);
+        ctxH.fill();
+        ctxH.restore();
+
+        if (c.life <= 0) confetti.splice(idx, 1);
+      });
+
+      requestAnimationFrame(drawHearts);
+    }
+
+    drawHearts();
+
+    // ====== CANVAS FX: Falling Petals ======
+    const cPetals = document.getElementById("fxPetals");
+    const ctxP = cPetals.getContext("2d");
+
+    let WP = 0,
+      HP = 0,
+      dprP = 1;
+
+    function resizePetals() {
+      dprP = devicePixelRatio || 1;
+      cPetals.width = innerWidth * dprP;
+      cPetals.height = innerHeight * dprP;
+      cPetals.style.width = innerWidth + "px";
+      cPetals.style.height = innerHeight + "px";
+      ctxP.setTransform(dprP, 0, 0, dprP, 0, 0);
+      WP = innerWidth;
+      HP = innerHeight;
+    }
+
+    window.addEventListener("resize", resizePetals);
+    resizePetals();
+
+    let petalsOn = true;
+    const btnPetals = document.getElementById("btnPetals");
+
+    btnPetals.addEventListener("click", () => {
+      petalsOn = !petalsOn;
+      btnPetals.textContent = `🌸 Petals: ${petalsOn ? "On" : "Off"}`;
+    });
+
+    const petals = [];
+    function spawnPetal() {
+      petals.push({
+        x: rand(0, WP),
+        y: rand(-40, -10),
+        vx: rand(-0.6, 0.6),
+        vy: rand(0.9, 2.1),
+        rot: rand(0, Math.PI * 2),
+        vr: rand(-0.03, 0.03),
+        s: rand(6, 14),
+        wob: rand(0, Math.PI * 2),
+        wobSpd: rand(0.01, 0.03),
+        a: rand(0.55, 0.9),
+      });
+
+      if (petals.length > 90) petals.shift();
+    }
+
+    setInterval(spawnPetal, 140);
+
+    function drawPetalShape(x, y, s, rot, alpha) {
+      ctxP.save();
+      ctxP.translate(x, y);
+      ctxP.rotate(rot);
+      ctxP.globalAlpha = alpha;
+
+      // simple petal (teardrop-like)
+      ctxP.beginPath();
+      ctxP.moveTo(0, -s);
+      ctxP.bezierCurveTo(s * 0.9, -s * 0.6, s * 0.9, s * 0.7, 0, s);
+      ctxP.bezierCurveTo(-s * 0.9, s * 0.7, -s * 0.9, -s * 0.6, 0, -s);
+      ctxP.closePath();
+
+      // soft pink fill
+      ctxP.fillStyle = "rgba(255, 170, 205, 0.85)";
+      ctxP.fill();
+
+      // tiny highlight
+      ctxP.globalAlpha = alpha * 0.55;
+      ctxP.beginPath();
+      ctxP.ellipse(-s * 0.15, -s * 0.2, s * 0.25, s * 0.45, 0, 0, Math.PI * 2);
+      ctxP.fillStyle = "rgba(255,255,255,0.65)";
+      ctxP.fill();
+
+      ctxP.restore();
+    }
+
+    function drawPetals() {
+      ctxP.clearRect(0, 0, WP, HP);
+
+      if (petalsOn) {
+        petals.forEach((p) => {
+          p.wob += p.wobSpd;
+          p.x += p.vx + Math.sin(p.wob) * 0.7;
+          p.y += p.vy;
+          p.rot += p.vr;
+
+          drawPetalShape(p.x, p.y, p.s, p.rot, p.a);
+
+          if (p.y > HP + 30) {
+            p.y = rand(-60, -20);
+            p.x = rand(0, WP);
+          }
+        });
+      }
+
+      requestAnimationFrame(drawPetals);
+    }
+
+    drawPetals();
+  </script>
 </body>
 </html>
